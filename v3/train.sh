@@ -5,12 +5,12 @@ set -e
 
 DIR="$( cd "$( dirname "$0" )" && cd .. && pwd )"
 OUTPUT_DIR="${DIR}/checkpoint/v3/$(date +%F-%H)"
-DATA_DIR="${DIR}/ReadingBank/"
+DATA_DIR="${DIR}/cinbank/"
 
 mkdir -p "${OUTPUT_DIR}"
 
 deepspeed train.py \
-  --model_dir 'microsoft/layoutlmv3-large' \
+  --model_dir "${DIR}/final_weights/base" \
   --dataset_dir "${DATA_DIR}" \
   --dataloader_num_workers 1 \
   --deepspeed ds_config.json \

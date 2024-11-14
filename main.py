@@ -14,7 +14,8 @@ from v3.helpers import MAX_LEN, parse_logits, prepare_inputs, boxes2inputs
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = (
     LayoutLMv3ForTokenClassification.from_pretrained(
-        os.getenv("LOAD_PATH", "hantian/layoutreader")
+        os.getenv("LOAD_PATH", "./checkpoint/v3/2024-11-14-08/checkpoint-2750")
+        #os.getenv("LOAD_PATH", "./final_weights/v1")
     )
     .bfloat16()
     .to(device)
@@ -56,8 +57,8 @@ def do_predict(boxes: List[List[int]]) -> List[int]:
 
 @app.post("/predict")
 def predict(request: PredictRequest) -> PredictResponse:
-    x_scale = 1000.0 / request.width
-    y_scale = 1000.0 / request.height
+    x_scale = min(1, 1000.0 / request.width)
+    y_scale = min(1, 1000.0 / request.height)
 
     boxes = []
     logger.info(f"Scale: {x_scale}, {y_scale}, Boxes len: {len(request.boxes)}")

@@ -16,7 +16,7 @@ class DataCollator:
         labels = []
         input_ids = []
         attention_mask = []
-
+            
         # clip bbox and labels to max length, build input_ids and attention_mask
         for feature in features:
             _bbox = feature["source_boxes"]
@@ -27,7 +27,9 @@ class DataCollator:
                 _labels = _labels[:MAX_LEN]
             _input_ids = [UNK_TOKEN_ID] * len(_bbox)
             _attention_mask = [1] * len(_bbox)
-            assert len(_bbox) == len(_labels) == len(_input_ids) == len(_attention_mask)
+            assert len(_bbox) == len(_labels)
+            assert len(_input_ids) == len(_attention_mask)
+            assert len(_labels) == len(_input_ids)
             bbox.append(_bbox)
             labels.append(_labels)
             input_ids.append(_input_ids)

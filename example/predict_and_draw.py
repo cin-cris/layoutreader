@@ -1,10 +1,10 @@
 import cv2
-import fitz
+import pymupdf
 import requests
 
 # Please `python main.py` first
 
-doc = fitz.open("./test.pdf")
+doc = pymupdf.open("./004_05_00.pdf")
 for i, page in enumerate(doc):
     page_img_file = f"./page_{i}.png"
     pix = page.get_pixmap()
@@ -15,17 +15,15 @@ for i, page in enumerate(doc):
     height = dicts["height"]
     boxes = []
     for block in dicts["blocks"]:
-        if "lines" not in block:
-            continue
-        for line in block["lines"]:
-            for span in line["spans"]:
-                boxes.append(span["bbox"])
+        boxes.append(block["bbox"])
     # send to server to predict orders
     r = requests.post(
         "http://localhost:8000/predict",
         json={"boxes": boxes, "width": width, "height": height},
     )
+
     orders = r.json()["orders"]
+    print(orders)
     # reorder boxes
     boxes = [boxes[i] for i in orders]
     # draw boxes

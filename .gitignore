@@ -4,3 +4,13 @@ checkpoint/
 cache*
 output*
 dataset-*.json
+final_weights/
+ReadingBank/
+rb_train/
+rb_dev/
+rb_test/
+aur-684_multimodal_document_parsing_v2/
+cinbank/
+train/
+test/
+dev/

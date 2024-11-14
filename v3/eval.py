@@ -60,26 +60,29 @@ def main(
             pred_index = parse_logits(logit, len(target_index))
             assert len(pred_index) == len(target_index)
             assert not check_duplicate(pred_index)
+            """
             target_texts = data["target_texts"][:MAX_LEN]
             source_texts = data["source_texts"][:MAX_LEN]
             pred_texts = []
             for idx in pred_index:
                 pred_texts.append(source_texts[idx])
+            
+            total_out_token += sentence_bleu(
+                [" ".join(target_texts).split()],
+                " ".join(pred_texts).split(),
+                smoothing_function=chen_cherry.method2,
+            )
+            """
             total += 1
             total_out_idx += sentence_bleu(
                 [target_index],
                 [i + 1 for i in pred_index],
                 smoothing_function=chen_cherry.method2,
             )
-            total_out_token += sentence_bleu(
-                [" ".join(target_texts).split()],
-                " ".join(pred_texts).split(),
-                smoothing_function=chen_cherry.method2,
-            )
 
     print("total: ", total)
     print("out_idx: ", round(100 * total_out_idx / total, 1))
-    print("out_token: ", round(100 * total_out_token / total, 1))
+    # print("out_token: ", round(100 * total_out_token / total, 1))
 
 
 if __name__ == "__main__":

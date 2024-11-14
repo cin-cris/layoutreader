@@ -39,7 +39,7 @@ def create_dataset_spans(
         ..., help="Path to the output file, like `./train.jsonl.gz`"
     ),
     src_shuffle_rate: float = typer.Option(
-        0.5, help="The rate to shuffle input's order"
+        0.0, help="The rate to shuffle input's order"
     ),
 ):
     random.seed(42)
@@ -86,9 +86,12 @@ def create_dataset_spans(
             # sort from left to right, top to bottom
             tmp = sorted(tmp, key=lambda x: (x[1][2], x[1][1]))
 
+        print(target_boxes)
+
         target_index = [0] * len(target_boxes)
         source_boxes = []
         source_texts = []
+        print (f"Target after sorted: {tmp}")
         j = 1
         for i, _ in tmp:
             source_boxes.append(target_boxes[i].copy())
@@ -96,13 +99,21 @@ def create_dataset_spans(
             target_index[i] = j
             j += 1
 
+        print(f"Source: {source_boxes}")
+        for i in range(len(source_boxes)):
+            if target_boxes[i] == source_boxes[0]:
+                print(i)
+                break
+        print(f"Index: {target_index}")
+        exit(0)
+
         f_out.write(
             json.dumps(
                 {
                     "source_boxes": source_boxes,
-                    "source_texts": source_texts,
+                    "source_texts": [],
                     "target_boxes": target_boxes,
-                    "target_texts": target_texts,
+                    "target_texts": [],
                     "target_index": target_index,
                     "bleu": text["bleu"],
                 }
