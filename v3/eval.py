@@ -78,7 +78,7 @@ def main(
                 [target_index],
                 [i + 1 for i in pred_index],
                 smoothing_function=chen_cherry.method2,
-            )
+            )   
 
     print("total: ", total)
     print("out_idx: ", round(100 * total_out_idx / total, 1))

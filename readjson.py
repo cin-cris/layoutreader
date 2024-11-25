@@ -1,7 +1,7 @@
 import gzip
 import json
 
-file_path = "./cinbank/dev.jsonl.gz"
+file_path = "./cinbank/test.jsonl.gz"
 
 def show():
     with gzip.open(file_path, "rt") as f:  # "rt" mode for reading text from gzip

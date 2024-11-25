@@ -14,8 +14,8 @@ from v3.helpers import MAX_LEN, parse_logits, prepare_inputs, boxes2inputs
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = (
     LayoutLMv3ForTokenClassification.from_pretrained(
-        os.getenv("LOAD_PATH", "./checkpoint/v3/2024-11-14-08/checkpoint-2750")
-        #os.getenv("LOAD_PATH", "./final_weights/v1")
+        #os.getenv("LOAD_PATH", "/mnt/disks/data/aurora/docreader/weights/reading_order/layoutlmv3-large/checkpoint-22550")
+        os.getenv("LOAD_PATH", "/mnt/disks/data/aurora/docreader/weights/reading_order/LayoutReader/v2")
     )
     .bfloat16()
     .to(device)

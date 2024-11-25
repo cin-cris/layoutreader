@@ -143,7 +143,7 @@ def create_dataset_spans(
             target_boxes[i] = [min(1000, int(x * ratio)) for x in target_boxes[i]]
             assert max(target_boxes[i]) <= 1000
         
-        # shuffle each page 'shuf' times to create more dataa
+        # shuffle each page 'shuf' times to create more data
         shuf = 10
         for i in range(shuf):
             write_out(target_boxes, f_out)

@@ -14,14 +14,14 @@ deepspeed train.py \
   --dataset_dir "${DATA_DIR}" \
   --dataloader_num_workers 1 \
   --deepspeed ds_config.json \
-  --per_device_train_batch_size 32 \
-  --per_device_eval_batch_size 64 \
+  --per_device_train_batch_size 16 \
+  --per_device_eval_batch_size 32 \
   --do_train \
   --do_eval \
   --logging_steps 100 \
   --bf16 \
   --seed 42 \
-  --num_train_epochs 10 \
+  --num_train_epochs 40 \
   --learning_rate 5e-5 \
   --warmup_steps 1000 \
   --save_strategy epoch \

@@ -14,3 +14,4 @@ cinbank/
 train/
 test/
 dev/
+*.png
